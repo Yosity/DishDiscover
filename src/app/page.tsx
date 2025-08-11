@@ -1,103 +1,99 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import { fetchRecipes } from "@/utils/index";
+import RecipeCard from "@/components/RecipeCard";
 
-export default function Home() {
+import { charm } from "@/utils/fonts";
+import { bubblegum } from "@/utils/fonts";
+
+export default function Page() {
+  const [recipes, setRecipes] = useState([]);
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const handler = setTimeout(async () => {
+  //     const results = await fetchRecipes(query);
+  //     setRecipes(results);
+  //     setLoading(false);
+  //   }, 500); // 500ms debounce delay
+
+  //   return () => clearTimeout(handler);
+  // }, [query]);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="bg-white w-full max-w-[1500px]">
+      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
+        {/* Background Image */}
+        <picture>
+          <source media="(max-width: 858px)" srcSet="/hero-mobile.webp" />
+          <img
+            src="/hero-desktop.jpg"
+            alt="Background"
+            className="absolute top-0 left-0 w-full h-full object-fill"
+            loading="eager"
+          />
+        </picture>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Blur Overlay */}
+        <div className="absolute inset-0 bg-black/20  z-10"></div>
+
+        <span
+          className={` ${charm.className} absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
+                 text-white text-center bg-black/20 backdrop-blur-sm text-8xl p-8 rounded-lg z-20`}
+        >
+          BON APPETITE
+        </span>
+      </section>
+      <section className=" mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:flex-row-reverse lg:items-start lg:text-start">
+        <div className="flex-1 lg:pl-5">
+          <h2 className={`text-7xl ${bubblegum.className}`}>WELCOME !!</h2>
+          <p className="leading-7 tracking-wide">
+            to DishDiscover, your gateway to exploring delicious meals from
+            around the world! Whether you’re craving comfort food, hunting for a
+            quick weeknight dinner, or trying something entirely new, we’ve got
+            you covered. All recipes and meal information on our site are
+            sourced from the <b>Spoonacular API</b>, a rich and reliable
+            database of culinary inspiration. <b>Please note </b> that we’re
+            currently using the free version of the API, which limits us to 50
+            requests per day....{" "}
+            <span className="uppercase text-xs font-[600]">
+              So dont explore too much eh ?
+            </span>
+          </p>
+          <p className="mt-5">You can search for whatever recipe down below</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className=" flex-1 ">
+          <img
+            src="/pizzaMan.webp"
+            alt="Pizza Man"
+            className="w-full max-w-[550px] m-auto min-w-[280px]  aspect-square"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+      </section>
+      <section className="w-full px-5 py-[2rem] flex flex-col justify-center items-center gap-y-[3rem]">
+        <input
+          className="w-full max-w-xl px-4 py-3 rounded-lg border border-gray-500"
+          placeholder="Search"
+          type="text"
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
+        {loading && <p>Loading...</p>}
+
+        {/* <div className=" max-w-[1200px] grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
+          {recipes.map((item) => (
+            <RecipeCard
+              id={item.id}
+              title={item.title}
+              image={item.image}
+              key={item.id}
+            />
+          ))}
+        </div> */}
+      </section>
     </div>
   );
 }
