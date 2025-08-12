@@ -13,7 +13,7 @@ export default async function RecipeDetails({
   const information = await fetchInformation(id);
   const randomRecipes = await fetchRandom(3);
 
-  function stripHTML(text) {
+  function stripHTML(text: string) {
     return text.replace(/<[^>]*>?/gm, "");
   }
   return (
@@ -42,11 +42,13 @@ export default async function RecipeDetails({
           <div className="flex-1 w-full">
             <h3 className={`${bubblegum.className} text-3xl`}>Ingredients</h3>
             <ul className="flex flex-col gap-y-4 mt-4">
-              {information.extendedIngredients.map((ingredient, i) => (
-                <li key={i} className="ingredient-list relative pl-[15px]">
-                  {ingredient.original}
-                </li>
-              ))}
+              {information.extendedIngredients.map(
+                (ingredient: any, i: number) => (
+                  <li key={i} className="ingredient-list relative pl-[15px]">
+                    {ingredient.original}
+                  </li>
+                )
+              )}
             </ul>
           </div>
           <div className="flex-2 max-sm:text-center lg:pr-10">
@@ -61,7 +63,7 @@ export default async function RecipeDetails({
             Discover
           </h3>
           <div className=" w-full max-w-[1200px] flex flex-wrap justify-center gap-[1rem]">
-            {randomRecipes.map((item) => (
+            {randomRecipes.map((item: any) => (
               <RecipeCard
                 id={item.id}
                 title={item.title}

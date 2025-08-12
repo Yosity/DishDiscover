@@ -84,7 +84,7 @@ export default function Page() {
         {loading && <p>Loading...</p>}
 
         <div className=" max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
-          {recipes.map((item) => (
+          {recipes.map((item: any) => (
             <RecipeCard
               id={item.id}
               title={item.title}
