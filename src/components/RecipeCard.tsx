@@ -1,6 +1,14 @@
 "use client";
 import Link from "next/link";
-export default function RecipeCard({ id, title, image }) {
+export default function RecipeCard({
+  id,
+  title,
+  image,
+}: {
+  id: string;
+  title: string;
+  image: string;
+}) {
   return (
     <Link
       href={`/${id}`}
