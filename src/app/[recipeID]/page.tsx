@@ -6,7 +6,7 @@ import { bubblegum, charm } from "@/utils/fonts";
 export default async function RecipeDetails({
   params,
 }: {
-  params: { recipeID: string };
+  params: Promise<{ recipeID: string }>;
 }) {
   const id = (await params).recipeID;
 
