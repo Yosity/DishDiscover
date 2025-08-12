@@ -11,20 +11,20 @@ export default function Page() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const handler = setTimeout(async () => {
-  //     const results = await fetchRecipes(query);
-  //     setRecipes(results);
-  //     setLoading(false);
-  //   }, 500); // 500ms debounce delay
+  useEffect(() => {
+    setLoading(true);
+    const handler = setTimeout(async () => {
+      const results = await fetchRecipes(query);
+      setRecipes(results);
+      setLoading(false);
+    }, 500); // 500ms debounce delay
 
-  //   return () => clearTimeout(handler);
-  // }, [query]);
+    return () => clearTimeout(handler);
+  }, [query]);
 
   return (
     <div className="bg-white w-full max-w-[1500px]">
-      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
+      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden">
         {/* Background Image */}
         <picture>
           <source media="(max-width: 858px)" srcSet="/hero-mobile.webp" />
@@ -83,7 +83,7 @@ export default function Page() {
         />
         {loading && <p>Loading...</p>}
 
-        {/* <div className=" max-w-[1200px] grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
+        <div className=" max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
           {recipes.map((item) => (
             <RecipeCard
               id={item.id}
@@ -92,7 +92,7 @@ export default function Page() {
               key={item.id}
             />
           ))}
-        </div> */}
+        </div>
       </section>
     </div>
   );

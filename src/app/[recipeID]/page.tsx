@@ -1,7 +1,7 @@
 import { fetchInformation, fetchRandom } from "@/utils/index";
 import RecipeCard from "@/components/RecipeCard";
 
-import { bubblegum } from "@/utils/fonts";
+import { bubblegum, charm } from "@/utils/fonts";
 
 export default async function RecipeDetails({
   params,
@@ -31,28 +31,32 @@ export default async function RecipeDetails({
         <div className="absolute inset-0 bg-black/30 backdrop-blur-lg z-10"></div>
 
         {/* Title */}
-        <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white rounded-3xl p-5 z-20">
+        <h1
+          className={` ${charm.className} text-7xl text-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white rounded-3xl p-5 z-20`}
+        >
           {information.title}
         </h1>
       </section>
       <section className="  w-full flex  flex-between justify-between gap-5 p-5 max-lg:flex-col">
         <div className="lg:pl-5 flex-1 flex flex-col justify-center gap-y-[3rem] self-start max-lg:items-start max-lg:flex-row max-lg:gap-x-5 max-sm:flex-col max-sm:items-center">
           <div className="flex-1 w-full">
-            <h3 className={`${bubblegum.className}`}>Ingredients</h3>
-            <ul className="flex flex-col gap-y-2 mt-4">
+            <h3 className={`${bubblegum.className} text-3xl`}>Ingredients</h3>
+            <ul className="flex flex-col gap-y-4 mt-4">
               {information.extendedIngredients.map((ingredient, i) => (
-                <li key={i}>- {ingredient.original}</li>
+                <li key={i} className="ingredient-list relative pl-[15px]">
+                  {ingredient.original}
+                </li>
               ))}
             </ul>
           </div>
           <div className="flex-2 max-sm:text-center lg:pr-10">
-            <h3 className={`${bubblegum.className}`}>Summary</h3>
-            <p>{stripHTML(information.summary)}</p>
+            <h3 className={`${bubblegum.className} text-3xl`}>Summary</h3>
+            <p className="leading-7">{stripHTML(information.summary)}</p>
           </div>
         </div>
         <div className="flex-1 ">
           <h3
-            className={` ${bubblegum.className} mb-[1rem] max-lg:text-center`}
+            className={` ${bubblegum.className} mb-[1rem] max-lg:text-center text-3xl`}
           >
             Discover
           </h3>

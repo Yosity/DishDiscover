@@ -5,7 +5,7 @@ export default function RecipeCard({ id, title, image }) {
     <Link
       href={`/${id}`}
       key={id}
-      className=" group justify-self-center align-self-start border border-red-600 overflow-hidden pb-3 rounded-lg max-w-[400px] bg-container flex flex-col justify-start items-center text-center gap-y-[20px] hover:bg-containerHover duration-300"
+      className=" group justify-self-center align-self-start border border-red-600 overflow-hidden pb-3 rounded-lg max-w-[300px] w-full bg-container flex flex-col justify-start items-center text-center gap-y-[20px] hover:bg-containerHover duration-300"
     >
       <div className=" overflow-hidden h-[180px] md:h-[200px] w-full min-w-[280px]">
         <img

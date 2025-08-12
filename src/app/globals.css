@@ -18,6 +18,17 @@
   }
 }
 
+.ingredient-list::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 0px;
+  top: 8px;
+  width: 7px;
+  border-radius: 5px;
+  aspect-ratio: 1/1;
+  background-color: var(--headers);
+}
 html {
   color: var(--text);
 }
