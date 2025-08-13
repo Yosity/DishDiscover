@@ -96,7 +96,6 @@ export default function Page() {
             setQuery(e.target.value);
           }}
         />
-        {/* {loading && <p>Loading...</p>} */}
 
         <div className=" max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
           {loading
