@@ -1,15 +1,14 @@
-export async function fetchRecipes(query) {
+export async function fetchRecipes(query, offset = 0, number = 8) {
   try {
     const response = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?query=${
         !query ? "dessert" : query
-      }&apiKey=${process.env.NEXT_PUBLIC_API_KEY}`
+      }&number=${number}&offset=${offset}&apiKey=${
+        process.env.NEXT_PUBLIC_API_KEY
+      }`
     );
-    if (!response.ok) {
-      throw new Error("Couldnt fetch de response");
-    }
+    if (!response.ok) throw new Error("Couldnt fetch de response");
     const data = await response.json();
-    // console.log(data.results);
     return data.results;
   } catch (error) {
     console.log(error);
@@ -40,7 +39,15 @@ export async function fetchRandom(amount) {
     if (!response.ok) throw new Error("Couldnt fetch de response");
 
     const data = await response.json();
-    return data.recipes;
+
+    const simplifiedData = data.recipes.map(({ id, title, image }) => ({
+      id,
+      title,
+      image,
+    }));
+
+    return simplifiedData;
+    // return data.recipes;
   } catch (error) {
     console.log(error);
   }

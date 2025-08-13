@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #e5e5cb5c;
-  --headers: #3c2a21;
-  --container: #d5cea3;
-  --text: #1a120b;
+  --background: #fcf5f4;
+  --headers: #c94639;
+  --container: #e39a9a69;
+  --text: #160706;
 }
 @theme {
-  --color-container: #bab28750;
-  --color-containerHover: #d5cea3;
-  --color-text: #1a120b;
+  --color-container: #e39a9a69;
+  --color-containerHover: #ff8383;
+  --color-header: #c94639;
+  --color-text: #160706;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -37,4 +38,5 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
+  background-color: var(--background);
 }

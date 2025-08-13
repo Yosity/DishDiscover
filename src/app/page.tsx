@@ -1,15 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchRecipes } from "@/utils/index";
+import { fetchRecipes, fetchRandom } from "@/utils/index";
 import RecipeCard from "@/components/RecipeCard";
+import RecipeCardSkeleton from "@/components/RecipeCardSkeleton";
 
 import { charm } from "@/utils/fonts";
 import { bubblegum } from "@/utils/fonts";
 
+type Recipe = {
+  id: number;
+  title: string;
+  image: string;
+};
 export default function Page() {
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [query, setQuery] = useState("");
+  const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingRandom, setLoadingRandom] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -17,15 +25,22 @@ export default function Page() {
       const results = await fetchRecipes(query);
       setRecipes(results);
       setLoading(false);
-    }, 500); // 500ms debounce delay
+    }, 500);
 
     return () => clearTimeout(handler);
   }, [query]);
 
+  const handleFetchMore = async () => {
+    setLoadingRandom(true);
+    const moreResults = await fetchRecipes(query, offset + 8, 8);
+    setRecipes((prev) => [...prev, ...moreResults]);
+    setOffset((prev) => prev + 8);
+    setLoadingRandom(false);
+  };
+
   return (
-    <div className="bg-white w-full max-w-[1500px]">
-      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden">
-        {/* Background Image */}
+    <div className="bg-white w-full max-w-[1500px] pb-[5rem]">
+      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
         <picture>
           <source media="(max-width: 858px)" srcSet="/hero-mobile.webp" />
           <img
@@ -81,18 +96,34 @@ export default function Page() {
             setQuery(e.target.value);
           }}
         />
-        {loading && <p>Loading...</p>}
+        {/* {loading && <p>Loading...</p>} */}
 
         <div className=" max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
-          {recipes.map((item: any) => (
-            <RecipeCard
-              id={item.id}
-              title={item.title}
-              image={item.image}
-              key={item.id}
-            />
-          ))}
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <RecipeCardSkeleton key={`skeleton-${i}`} />
+              ))
+            : recipes.map((item: any) => (
+                <RecipeCard
+                  id={item.id}
+                  title={item.title}
+                  image={item.image}
+                  key={item.id}
+                />
+              ))}
+
+          {loadingRandom &&
+            Array.from({ length: 4 }).map((_, i) => (
+              <RecipeCardSkeleton key={`skeleton-${i}`} />
+            ))}
         </div>
+        <button
+          onClick={handleFetchMore}
+          disabled={loadingRandom}
+          className="mt-8 px-6 py-3 bg-header text-white font-bold rounded-lg disabled:bg-gray-400 duration-150 cursor-pointer"
+        >
+          {loadingRandom ? "Loading..." : "Show more"}
+        </button>
       </section>
     </div>
   );

@@ -11,14 +11,14 @@ export default async function RecipeDetails({
   const id = (await params).recipeID;
 
   const information = await fetchInformation(id);
-  const randomRecipes = await fetchRandom(3);
+  const randomRecipes = await fetchRandom(4);
 
   function stripHTML(text: string) {
     return text.replace(/<[^>]*>?/gm, "");
   }
   return (
-    <div className="w-full max-w-[1500px] bg-white">
-      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden">
+    <div className="w-full max-w-[1500px] bg-white pb-[5rem]">
+      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
         {/* Background Image */}
         <img
           src={information.image}

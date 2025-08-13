@@ -7,9 +7,9 @@ export default function Navbar() {
   const [activeLink, setactiveLink] = useState("home");
   return (
     <nav className="flex justify-between items-center py-4 px-6 bg-text w-full max-w-[1500px] text-white fixed top-0 z-50">
-      <div className="text-xl tracking-wider">
-        <b className="text-containerHover">D</b>ish
-        <b className="text-containerHover">D</b>
+      <div className="text-2xl tracking-wider select-none">
+        <b className="text-header">D</b>ish
+        <b className="text-header">D</b>
         iscover
       </div>
 
@@ -19,7 +19,7 @@ export default function Navbar() {
           onClick={() => {
             setactiveLink("home");
           }}
-          className={`${activeLink == "home" ? "text-containerHover" : ""}`}
+          className={`${activeLink == "home" ? "text-header" : ""}`}
         >
           Home
         </Link>
@@ -28,15 +28,13 @@ export default function Navbar() {
           onClick={() => {
             setactiveLink("favorites");
           }}
-          className={`${
-            activeLink == "favorites" ? "text-containerHover" : ""
-          }`}
+          className={`${activeLink == "favorites" ? "text-header" : ""}`}
         >
           Favorites
         </Link>
       </div>
 
-      <button className="hidden lg:block border-1 border-containerHover px-3 py-2 rounded-md hover:bg-containerHover cursor-pointer">
+      <button className="hidden lg:block border-1 border-header px-3 py-2 rounded-md hover:bg-header cursor-pointer duration-150">
         SignUp
       </button>
 
@@ -55,7 +53,7 @@ export default function Navbar() {
           </Link>
           <button
             onClick={() => setIsOpen(false)}
-            className=" border-1 border-containerHover px-3 py-2 rounded-md hover:bg-containerHover"
+            className=" border-1 border-header px-3 py-2 rounded-md hover:bg-header duration-150"
           >
             SignUp
           </button>
