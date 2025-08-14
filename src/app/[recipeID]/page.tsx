@@ -22,7 +22,7 @@ export default async function RecipeDetails({
           src={information.image}
           alt="background Image"
           className="absolute top-0 left-0 w-full h-full object-fill"
-          loading="lazy"
+          loading="eager"
         />
 
         <div className="absolute inset-0 bg-black/30 backdrop-blur-lg z-10"></div>
