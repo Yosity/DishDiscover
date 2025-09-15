@@ -32,11 +32,13 @@
 }
 html {
   color: var(--text);
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
   display: grid;
   place-items: center;
   min-height: 100vh;
-  background-color: var(--background);
+  background-color: #fffdfd;
 }

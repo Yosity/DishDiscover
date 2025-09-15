@@ -7,11 +7,18 @@ import RecipeCardSkeleton from "@/components/RecipeCardSkeleton";
 import { charm } from "@/utils/fonts";
 import { bubblegum } from "@/utils/fonts";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+
+gsap.registerPlugin(ScrollTrigger);
+
 type Recipe = {
   id: number;
   title: string;
   image: string;
 };
+
 export default function Page() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [query, setQuery] = useState("");
@@ -39,7 +46,11 @@ export default function Page() {
   };
 
   return (
-    <div className="bg-white w-full max-w-[1500px] pb-[5rem]">
+    <div
+      className="bg-white w-full max-w-[1500px] pb-[5rem]"
+      id="main-container"
+      data-scroll-container
+    >
       <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
         <picture>
           <source media="(max-width: 858px)" srcSet="/hero-mobile.webp" />
@@ -51,8 +62,7 @@ export default function Page() {
           />
         </picture>
 
-        {/* Blur Overlay */}
-        <div className="absolute inset-0 bg-black/20  z-10"></div>
+        <div className="absolute inset-0 bg-black/20 z-10"></div>
 
         <span
           className={` ${charm.className} absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
@@ -61,9 +71,10 @@ export default function Page() {
           BON APPETITE
         </span>
       </section>
-      <section className=" mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:flex-row-reverse lg:items-start lg:text-start">
-        <div className="flex-1 lg:pl-5">
-          <h2 className={`text-7xl ${bubblegum.className}`}>WELCOME !!</h2>
+
+      <section className="mb-15 p-5 flex flex-col items-center justify-center gap-15 text-center lg:grid lg:grid-cols-2 lg:gap-10 lg:place-items-center lg:text-start">
+        <div className="flex-1 lg:pl-5 max-w-[750px] lg:order-2 flex flex-col">
+          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>WELCOME !!</h2>
           <p className="leading-7 tracking-wide">
             to DishDiscover, your gateway to exploring delicious meals from
             around the world! Whether you’re craving comfort food, hunting for a
@@ -77,27 +88,87 @@ export default function Page() {
               So dont explore too much eh ?
             </span>
           </p>
-          <p className="mt-5">You can search for whatever recipe down below</p>
+          <p className="mt-5 mb-10">
+            You can search for whatever recipe down below
+          </p>
+          <Link
+            href={`/#recipes`}
+            className=" p-3 rounded-md bg-header border border-transparent text-white hover:bg-white hover:text-black hover:border-black duration-150 self-center"
+          >
+            Take me there
+          </Link>
         </div>
-        <div className=" flex-1 ">
+        <div className="flex-1">
           <img
             src="/pizzaMan.webp"
             alt="Pizza Man"
-            className="w-full max-w-[550px] m-auto min-w-[280px]  aspect-square"
+            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square"
           />
         </div>
       </section>
-      <section className="w-full px-5 py-[2rem] flex flex-col justify-center items-center gap-y-[3rem]">
+
+      <section className="lg:mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
+        <div className="flex-1 lg:pl-5 max-w-[750px] ">
+          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
+            Cook Smarter, Eat Better
+          </h2>
+          <p className="leading-7 tracking-wide">
+            Cooking at home doesn’t have to be stressful or complicated. Each
+            recipe here comes with step-by-step instructions, cooking times, and
+            nutrition facts, so you can plan your meals with confidence. Whether
+            you’re new to the kitchen or already know your way around a cutting
+            board, our goal is to make cooking something you actually look
+            forward to. Think of DishDiscover as your friendly kitchen sidekick,
+            helping you cook smarter, waste less, and eat meals you’ll actually
+            be excited about.{" "}
+          </p>
+        </div>
+        <div className="flex-1 overflow-hidden rounded-xl ">
+          <img
+            src="/steak.webp"
+            alt="Pizza Man"
+            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square"
+          />
+        </div>
+      </section>
+      <section className="mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
+        <div className="flex-1 lg:pl-5 max-w-[750px] lg:order-2">
+          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
+            Your Next Favorite Meal Awaits
+          </h2>
+          <p className="leading-7 tracking-wide">
+            The beauty of cooking is that there’s always something new to try.
+            Today it could be a quick 15-minute pasta, tomorrow a slow-cooked
+            stew that fills the whole house with amazing smells. DishDiscover is
+            here to give you those options—all you have to do is search and
+            explore. And hey, don’t worry if you’re not a “pro chef.” Every
+            recipe is written so anyone can follow along (yes, even if you’ve
+            burned toast before 🥲). So… what are you waiting for? Type in an
+            ingredient, a craving, or even just “chicken,” and let’s see what
+            delicious ideas we can cook up together.
+          </p>
+        </div>
+        <div className="flex-1 bg-red-200 min-w-[280px] max-w-[550px] rounded-[50%] overflow-hidden">
+          <img
+            src="/sully.webp"
+            alt="Sully"
+            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square object-cover"
+          />
+        </div>
+      </section>
+
+      <section
+        id="recipes"
+        className="w-full px-5 py-[2rem] flex flex-col justify-center items-center gap-y-[3rem]"
+      >
         <input
           className="w-full max-w-xl px-4 py-3 rounded-lg border border-gray-500"
           placeholder="Search"
           type="text"
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
+          onChange={(e) => setQuery(e.target.value)}
         />
 
-        <div className=" max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
+        <div className="max-w-[1200px] w-full grid grid-cols-4 max-lg:grid-cols-3 max-lg:justify-center max-sm:flex max-sm:flex-wrap gap-[1rem]">
           {loading
             ? Array.from({ length: 4 }).map((_, i) => (
                 <RecipeCardSkeleton key={`skeleton-${i}`} />

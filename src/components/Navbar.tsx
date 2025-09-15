@@ -35,7 +35,7 @@ export default function Navbar() {
       </div>
 
       <button className="hidden lg:block border-1 border-header px-3 py-2 rounded-md hover:bg-header cursor-pointer duration-150">
-        SignUp
+        Sign up
       </button>
 
       <button className="lg:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
