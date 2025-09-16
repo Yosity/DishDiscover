@@ -35,10 +35,17 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
 }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   display: grid;
   place-items: center;
   min-height: 100vh;
   background-color: #fffdfd;
+}
+.xx {
+  background-color: #c94639;
+  margin-bottom: unset;
+  padding: unset;
+  gap: unset;
 }

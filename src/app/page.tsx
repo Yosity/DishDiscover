@@ -51,7 +51,7 @@ export default function Page() {
       id="main-container"
       data-scroll-container
     >
-      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15">
+      <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-15 lg:mb-0">
         <picture>
           <source media="(max-width: 858px)" srcSet="/hero-mobile.webp" />
           <img
@@ -72,8 +72,8 @@ export default function Page() {
         </span>
       </section>
 
-      <section className="mb-15 p-5 flex flex-col items-center justify-center gap-15 text-center lg:grid lg:grid-cols-2 lg:gap-10 lg:place-items-center lg:text-start">
-        <div className="flex-1 lg:pl-5 max-w-[750px] lg:order-2 flex flex-col">
+      <section className="mb-15 lg:mb-0 lg:p-0 p-5 flex flex-col items-center justify-center gap-15 text-center lg:grid lg:grid-cols-2 lg:gap-0 lg:place-items-center lg:text-start">
+        <div className="flex-1 p-10 lg:pt-25 h-full max-w-[750px] lg:order-2  ">
           <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>WELCOME !!</h2>
           <p className="leading-7 tracking-wide">
             to DishDiscover, your gateway to exploring delicious meals from
@@ -98,19 +98,20 @@ export default function Page() {
             Take me there
           </Link>
         </div>
-        <div className="flex-1">
+        <div className="w-full flex-1 overflow-hidden">
           <img
             src="/pizzaMan.webp"
             alt="Pizza Man"
-            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square"
+            className="w-full max-w-[550px] lg:max-w-[650px]  m-auto min-w-[280px] aspect-square lg:translate-x-[-30px] lg:translate-y-[20px]"
           />
         </div>
       </section>
 
-      <section className="lg:mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
-        <div className="flex-1 lg:pl-5 max-w-[750px] ">
+      <section className="mb-15 lg:mb-0  lg:p-0 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:gap-0 lg:place-items-center lg:text-start">
+        <div className="flex-1 p-10 lg:pt-25  h-full max-w-[750px]">
           <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
-            Cook Smarter, Eat Better
+            Cook Smarter, Eat Better,{" "}
+            <span className="text-xs uppercase">"chef Kratos"</span>
           </h2>
           <p className="leading-7 tracking-wide">
             Cooking at home doesn’t have to be stressful or complicated. Each
@@ -123,16 +124,16 @@ export default function Page() {
             be excited about.{" "}
           </p>
         </div>
-        <div className="flex-1 overflow-hidden rounded-xl ">
+        <div className="flex-1 overflow-hidden w-full ">
           <img
             src="/steak.webp"
-            alt="Pizza Man"
-            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square"
+            alt="Steak"
+            className="w-full max-w-[550px] lg:max-w-none  m-auto min-w-[280px] aspect-square"
           />
         </div>
       </section>
-      <section className="mb-15 p-5 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
-        <div className="flex-1 lg:pl-5 max-w-[750px] lg:order-2">
+      <section className="mb-15  flex flex-col items-center justify-center gap-10 lg:gap-0 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
+        <div className="flex-1 p-10 lg:pt-25  h-full max-w-[750px lg:order-2">
           <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
             Your Next Favorite Meal Awaits
           </h2>
@@ -148,11 +149,11 @@ export default function Page() {
             delicious ideas we can cook up together.
           </p>
         </div>
-        <div className="flex-1 bg-red-200 min-w-[280px] max-w-[550px] rounded-[50%] overflow-hidden">
+        <div className="flex-1 bg-red-200 min-w-[280px] bg-pink-400 w-full ">
           <img
             src="/sully.webp"
             alt="Sully"
-            className="w-full max-w-[550px] m-auto min-w-[280px] aspect-square object-cover"
+            className="w-full max-w-[550px] lg:max-w-none  m-auto min-w-[280px] aspect-square object-cover"
           />
         </div>
       </section>
