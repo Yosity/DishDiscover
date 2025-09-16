@@ -74,7 +74,7 @@ export default function Page() {
 
       <section className="mb-15 lg:mb-0 lg:p-0 p-5 flex flex-col items-center justify-center gap-15 text-center lg:grid lg:grid-cols-2 lg:gap-0 lg:place-items-center lg:text-start">
         <div className="flex-1 p-10 lg:pt-25 h-full max-w-[750px] lg:order-2  ">
-          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>WELCOME !!</h2>
+          <h2 className={`text-6xl mb-5 ${bubblegum.className}`}>WELCOME !!</h2>
           <p className="leading-7 tracking-wide">
             to DishDiscover, your gateway to exploring delicious meals from
             around the world! Whether you’re craving comfort food, hunting for a
@@ -109,7 +109,7 @@ export default function Page() {
 
       <section className="mb-15 lg:mb-0  lg:p-0 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:gap-0 lg:place-items-center lg:text-start">
         <div className="flex-1 p-10 lg:pt-25  h-full max-w-[750px]">
-          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
+          <h2 className={`text-6xl mb-5 ${bubblegum.className}`}>
             Cook Smarter, Eat Better,{" "}
             <span className="text-xs uppercase">"chef Kratos"</span>
           </h2>
@@ -134,7 +134,7 @@ export default function Page() {
       </section>
       <section className="mb-15  flex flex-col items-center justify-center gap-10 lg:gap-0 text-center lg:grid lg:grid-cols-2 lg:place-items-center lg:text-start">
         <div className="flex-1 p-10 lg:pt-25  h-full max-w-[750px lg:order-2">
-          <h2 className={`text-7xl mb-5 ${bubblegum.className}`}>
+          <h2 className={`text-6xl mb-5 ${bubblegum.className}`}>
             Your Next Favorite Meal Awaits
           </h2>
           <p className="leading-7 tracking-wide">
@@ -149,7 +149,7 @@ export default function Page() {
             delicious ideas we can cook up together.
           </p>
         </div>
-        <div className="flex-1 bg-red-200 min-w-[280px] bg-pink-400 w-full ">
+        <div className="flex-1  min-w-[280px] bg-pink-400 w-full ">
           <img
             src="/sully.webp"
             alt="Sully"
