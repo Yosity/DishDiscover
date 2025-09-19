@@ -1,5 +1,5 @@
 import { fetchInformation, fetchRandom } from "@/utils/index";
-import RecipeCard from "@/components/RecipeCard";
+import RecipeCard from "@/_components/RecipeCard";
 
 import { bubblegum, charm } from "@/utils/fonts";
 

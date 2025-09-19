@@ -1,10 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+
+import { supabase } from "@/utils/supabaseClient";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setactiveLink] = useState("home");
+  const [session, setSession] = useState<any>(null);
+  const fetchSession = async () => {
+    const currenSession = await supabase.auth.getSession();
+    setSession(currenSession.data.session);
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
+
+  useEffect(() => {
+    fetchSession();
+  }, []);
   return (
     <nav className="flex justify-between items-center py-4 px-6 bg-text w-full max-w-[1500px] text-white fixed top-0 z-50">
       <div className="text-2xl tracking-wider select-none">
@@ -33,10 +48,21 @@ export default function Navbar() {
           Favorites
         </Link>
       </div>
-
-      <button className="hidden lg:block border-1 border-header px-3 py-2 rounded-md hover:bg-header cursor-pointer duration-150">
-        Sign up
-      </button>
+      {session ? (
+        <button
+          onClick={logout}
+          className="hidden lg:block bg-header border-1 border-header px-3 py-2 rounded-md hover:bg-transparent  cursor-pointer duration-150"
+        >
+          Log out
+        </button>
+      ) : (
+        <Link
+          href={"/auth"}
+          className="hidden lg:block border-1 border-header px-3 py-2 rounded-md hover:bg-header cursor-pointer duration-150"
+        >
+          Sign in
+        </Link>
+      )}
 
       <button className="lg:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "✕" : "☰"}
@@ -51,12 +77,22 @@ export default function Navbar() {
           <Link href="/recipes" onClick={() => setIsOpen(false)}>
             Favorites
           </Link>
-          <button
-            onClick={() => setIsOpen(false)}
-            className=" border-1 border-header px-3 py-2 rounded-md hover:bg-header duration-150"
-          >
-            SignUp
-          </button>
+          {session ? (
+            <button
+              onClick={() => setIsOpen(false)}
+              className=" border-1 border-header px-3 py-2 rounded-md hover:bg-header duration-150"
+            >
+              Log out
+            </button>
+          ) : (
+            <Link
+              href={"/auth"}
+              onClick={() => setIsOpen(false)}
+              className=" border-1 border-header px-3 py-2 rounded-md hover:bg-header duration-150"
+            >
+              Sign in
+            </Link>
+          )}
         </nav>
       )}
     </nav>

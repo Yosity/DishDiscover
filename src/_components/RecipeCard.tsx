@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
+
 export default function RecipeCard({
   id,
   title,

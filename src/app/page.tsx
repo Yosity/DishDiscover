@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchRecipes, fetchRandom } from "@/utils/index";
-import RecipeCard from "@/components/RecipeCard";
-import RecipeCardSkeleton from "@/components/RecipeCardSkeleton";
-
+import RecipeCard from "@/_components/RecipeCard";
+import RecipeCardSkeleton from "@/_components/RecipeCardSkeleton";
+import NewRecipeForm from "@/_components/RecipeForm";
 import { charm } from "@/utils/fonts";
 import { bubblegum } from "@/utils/fonts";
 
@@ -11,6 +11,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 
+import { supabase } from "@/utils/supabaseClient";
 gsap.registerPlugin(ScrollTrigger);
 
 type Recipe = {
@@ -25,9 +26,11 @@ export default function Page() {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadingRandom, setLoadingRandom] = useState(false);
+  const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
     setLoading(true);
+    fetchSession();
     const handler = setTimeout(async () => {
       const results = await fetchRecipes(query);
       setRecipes(results);
@@ -37,6 +40,11 @@ export default function Page() {
     return () => clearTimeout(handler);
   }, [query]);
 
+  const fetchSession = async () => {
+    const currenSession = await supabase.auth.getSession();
+    console.log(currenSession);
+    setSession(currenSession.data.session);
+  };
   const handleFetchMore = async () => {
     setLoadingRandom(true);
     const moreResults = await fetchRecipes(query, offset + 8, 8);
@@ -109,9 +117,8 @@ export default function Page() {
 
       <section className="mb-15 lg:mb-0  lg:p-0 flex flex-col items-center justify-center gap-10 text-center lg:grid lg:grid-cols-2 lg:gap-0 lg:place-items-center lg:text-start">
         <div className="flex-1 p-10 lg:pt-25  h-full max-w-[750px]">
-          <h2 className={`text-6xl mb-5 ${bubblegum.className}`}>
-            Cook Smarter, Eat Better,{" "}
-            <span className="text-xs uppercase">"chef Kratos"</span>
+          <h2 className={`text-6xl mb-5 ${bubblegum.className} relative`}>
+            Cook Smarter, Eat Better
           </h2>
           <p className="leading-7 tracking-wide">
             Cooking at home doesn’t have to be stressful or complicated. Each
@@ -121,7 +128,7 @@ export default function Page() {
             board, our goal is to make cooking something you actually look
             forward to. Think of DishDiscover as your friendly kitchen sidekick,
             helping you cook smarter, waste less, and eat meals you’ll actually
-            be excited about.{" "}
+            be excited about.
           </p>
         </div>
         <div className="flex-1 overflow-hidden w-full ">
@@ -149,7 +156,7 @@ export default function Page() {
             delicious ideas we can cook up together.
           </p>
         </div>
-        <div className="flex-1  min-w-[280px] bg-pink-400 w-full ">
+        <div className="flex-1  min-w-[280px] w-full ">
           <img
             src="/sully.webp"
             alt="Sully"
@@ -157,7 +164,12 @@ export default function Page() {
           />
         </div>
       </section>
-
+      <section className="flex flex-col  items-center justify-center gap-8 ">
+        <h2 className={`text-6xl ${bubblegum.className} `}>
+          Contribute to the Database
+        </h2>
+        <NewRecipeForm isAllowed={!!session} />
+      </section>
       <section
         id="recipes"
         className="w-full px-5 py-[2rem] flex flex-col justify-center items-center gap-y-[3rem]"
