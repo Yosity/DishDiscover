@@ -3,7 +3,7 @@
 import { supabase } from "@/utils/supabaseClient";
 import { use, useEffect, useState } from "react";
 
-export default function NewRecipeForm({ isAllowed }) {
+export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
   const [newRecipe, setnewRecipe] = useState({
     title: "",
     ingredients: [""],
@@ -46,13 +46,11 @@ export default function NewRecipeForm({ isAllowed }) {
     <div className=" flex justify-center items-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-[600px] bg-text p-8 rounded-lg flex flex-col gap-6"
+        className="w-full max-w-[600px] bg-text p-8 rounded-xl flex flex-col gap-6"
       >
         <h2 className="text-2xl font-semibold text-white mb-4">
           Add New Recipe
         </h2>
-
-        {/* Recipe Title */}
         <input
           type="text"
           placeholder="Recipe Name"
@@ -64,14 +62,13 @@ export default function NewRecipeForm({ isAllowed }) {
           required
         />
 
-        {/* Ingredients */}
         <div className="flex flex-col gap-2">
           {newRecipe.ingredients.map((ing, idx) => (
             <input
               key={idx}
               type="text"
               placeholder={`Ingredient ${idx + 1} (e.g: 1 cup of milk)`}
-              className="block w-full rounded-md bg-white/5 px-3 py-2 text-gray-900 placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
+              className="block w-full rounded-md bg-white/5 px-3 py-2 text-white placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
               value={ing}
               onChange={(e) => {
                 const updated = [...newRecipe.ingredients];
@@ -94,15 +91,13 @@ export default function NewRecipeForm({ isAllowed }) {
             + Add Ingredient
           </button>
         </div>
-
-        {/* Nutrients */}
         <div className="flex gap-3 flex-wrap">
           {["protein", "fats", "calories"].map((nutrient) => (
             <input
               key={nutrient}
               type="number"
               placeholder={nutrient.charAt(0).toUpperCase() + nutrient.slice(1)}
-              className="rounded-md bg-white/5 px-3 py-2 text-gray-900 placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
+              className="rounded-md bg-white/5 px-3 py-2 text-white placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
               value={
                 newRecipe.nutrients[
                   nutrient as keyof typeof newRecipe.nutrients
@@ -120,19 +115,15 @@ export default function NewRecipeForm({ isAllowed }) {
             />
           ))}
         </div>
-
-        {/* Summary */}
         <textarea
           placeholder="Summary"
-          className="block w-full rounded-md bg-white/5 px-3 py-2 text-gray-900 placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
+          className="block w-full rounded-md bg-white/5 px-3 py-2 text-white placeholder-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-containerHover sm:text-sm/6"
           value={newRecipe.summary}
           onChange={(e) =>
             setnewRecipe({ ...newRecipe, summary: e.target.value })
           }
           required
         />
-
-        {/* Submit Button */}
         <div className="flex justify-center">
           <button
             type="submit"
@@ -142,28 +133,6 @@ export default function NewRecipeForm({ isAllowed }) {
           </button>
         </div>
       </form>
-
-      {/* <div className="flex flex-col  justify-center items-center gap-10">
-        {recipes.map((item: any, key: any) => (
-          <div
-            key={key}
-            className=" flex flex-col items-start justify-start max-w-[500px] bg-green-200"
-          >
-            <h2>{item.title}</h2>
-            <p>Ingredients: {item.ingredients.join(", ")}</p>
-            <p>Protein: {item.nutrients.protein}</p>
-            <p>Fats: {item.nutrients.fats}</p>
-            <p>Calories: {item.nutrients.calories}</p>
-            <p>{item.summary}</p>
-            <button
-              onClick={() => handleDelete(item.id)}
-              className="bg-red-400 p-2 px-4 cursor-pointer rounded-md"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }

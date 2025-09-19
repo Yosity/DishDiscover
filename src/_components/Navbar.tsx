@@ -19,6 +19,14 @@ export default function Navbar() {
 
   useEffect(() => {
     fetchSession();
+    const { data: sessionListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+    return () => {
+      sessionListener.subscription.unsubscribe();
+    };
   }, []);
   return (
     <nav className="flex justify-between items-center py-4 px-6 bg-text w-full max-w-[1500px] text-white fixed top-0 z-50">

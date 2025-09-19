@@ -31,13 +31,22 @@ export default function Page() {
   useEffect(() => {
     setLoading(true);
     fetchSession();
+
     const handler = setTimeout(async () => {
       const results = await fetchRecipes(query);
       setRecipes(results);
       setLoading(false);
     }, 500);
 
-    return () => clearTimeout(handler);
+    const { data: sessionListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+    return () => {
+      sessionListener.subscription.unsubscribe();
+      clearTimeout(handler);
+    };
   }, [query]);
 
   const fetchSession = async () => {
@@ -164,10 +173,11 @@ export default function Page() {
           />
         </div>
       </section>
-      <section className="flex flex-col  items-center justify-center gap-8 ">
+      <section className="flex flex-col  items-center justify-center gap-8 mb-10">
         <h2 className={`text-6xl ${bubblegum.className} `}>
           Contribute to the Database
         </h2>
+
         <NewRecipeForm isAllowed={!!session} />
       </section>
       <section
