@@ -39,7 +39,7 @@ const Footer = () => {
     // Start at the same time as the previous tween
   });
   return (
-    <footer className="py-20 max-w-[1500px] w-full bg-text flex justify-center items-center text-3xl overflow-hidden">
+    <footer className="py-20 max-w-[1500px] w-full bg-text flex justify-center items-center text-3xl overflow-hidden select-none">
       <div id="emoji1">&#127813;</div>
     </footer>
   );

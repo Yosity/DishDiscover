@@ -1,6 +1,6 @@
 import { fetchInformation, fetchRandom } from "@/utils/index";
 import RecipeCard from "@/_components/RecipeCard";
-
+import { supabase } from "@/utils/supabaseClient";
 import { bubblegum, charm } from "@/utils/fonts";
 
 export default async function RecipeDetails({
@@ -10,7 +10,24 @@ export default async function RecipeDetails({
 }) {
   const id = (await params).recipeID;
 
-  const information = await fetchInformation(id);
+  let information: any;
+  if (id.startsWith("supabase-")) {
+    const realId = id.replace("supabase-", "");
+    const { data, error } = await supabase
+      .from("recipes")
+      .select("*")
+      .eq("id", realId)
+      .single();
+
+    if (error) {
+      console.error(error.message);
+      return <p>Error loading recipe</p>;
+    }
+    information = data;
+  } else {
+    const realId = id.replace("spoonacular-", "");
+    information = await fetchInformation(realId);
+  }
   const randomRecipes = await fetchRandom(4);
   function stripHTML(text: string) {
     return text.replace(/<[^>]*>?/gm, "");
@@ -34,34 +51,60 @@ export default async function RecipeDetails({
         </h1>
       </section>
       <ul className="flex items-center justify-center w-full gap-5 mb-15 w-full ">
-        {information.nutrition?.nutrients
-          ?.filter((nut: any) =>
-            ["Calories", "Fat", "Protein"].includes(nut.name)
-          )
-          .map((nutrient: any, i: any) => (
-            <li
-              key={i}
-              className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base"
-            >
-              <span className="font-bold">{nutrient.name}</span>
-              <span className="block">
-                {nutrient.amount} {nutrient.unit}
-              </span>
+        {id.includes("supabase") ? (
+          <>
+            <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
+              <span className="font-bold">Calories</span>
+              <span className="block">{information.nutrients.calories}</span>
             </li>
-          ))}
+            <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
+              <span className="font-bold">Fat</span>
+              <span className="block">{information.nutrients.fats}</span>
+            </li>
+            <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
+              <span className="font-bold">Protein</span>
+              <span className="block">{information.nutrients.protein}</span>
+            </li>
+          </>
+        ) : (
+          information.nutrition?.nutrients
+            ?.filter((nut: any) =>
+              ["Calories", "Fat", "Protein"].includes(nut.name)
+            )
+            .map((nutrient: any, i: any) => (
+              <li
+                key={i}
+                className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base"
+              >
+                <span className="font-bold">{nutrient.name}</span>
+                <span className="block">
+                  {nutrient.amount} {nutrient.unit}
+                </span>
+              </li>
+            ))
+        )}
       </ul>
       <section className="  w-full flex  flex-between justify-between gap-5 p-5 max-lg:flex-col">
         <div className="lg:pl-5 flex-1 flex flex-col justify-center gap-y-[3rem] self-start max-lg:items-start max-lg:flex-row max-lg:gap-x-5 max-sm:flex-col max-sm:items-center">
           <div className="flex-1 w-full">
             <h3 className={`${bubblegum.className} text-3xl`}>Ingredients</h3>
             <ul className="flex flex-col gap-y-4 mt-4">
-              {information.extendedIngredients.map(
-                (ingredient: any, i: number) => (
-                  <li key={i} className="ingredient-list relative pl-[15px]">
-                    {ingredient.original}
-                  </li>
-                )
-              )}
+              {id.includes("supabase")
+                ? information.ingredients.map((ingredient: any, i: number) => (
+                    <li key={i} className="ingredient-list relative pl-[15px]">
+                      {ingredient}
+                    </li>
+                  ))
+                : information.extendedIngredients.map(
+                    (ingredient: any, i: number) => (
+                      <li
+                        key={i}
+                        className="ingredient-list relative pl-[15px]"
+                      >
+                        {ingredient.original}
+                      </li>
+                    )
+                  )}
             </ul>
           </div>
           <div className="flex-2 max-sm:text-center lg:pr-10">

@@ -59,7 +59,6 @@ export default function Page() {
 
   const fetchSession = async () => {
     const currenSession = await supabase.auth.getSession();
-    console.log(currenSession.data.session?.user.id);
     setSession(currenSession.data.session);
   };
 
@@ -210,7 +209,7 @@ export default function Page() {
             <div className="  flex flex-wrap justify-center items-start gap-7 max-h-[600px] overflow-auto">
               {supaRecipes.map((recipe: any) => (
                 <RecipeCard
-                  id={recipe.id}
+                  id={`supabase-${recipe.id}`}
                   title={recipe.title}
                   image={"/fallback.webp"} // if no image column
                   key={recipe.id}
@@ -238,7 +237,7 @@ export default function Page() {
               ))
             : recipes.map((item: any) => (
                 <RecipeCard
-                  id={item.id}
+                  id={`spoonacular-${item.id}`}
                   title={item.title}
                   image={item.image}
                   key={item.id}

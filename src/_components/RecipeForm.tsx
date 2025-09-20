@@ -96,7 +96,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
                 ingredients: [...newRecipe.ingredients, ""],
               })
             }
-            className="mt-2 w-fit cursor-pointer bg-containerHover text-white px-3 py-2 rounded-md hover:bg-transparent border border-containerHover transition"
+            className="mt-2 w-fit cursor-pointer bg-header text-white px-3 py-2 rounded-md hover:bg-transparent border border-header transition"
           >
             + Add Ingredient
           </button>
@@ -137,7 +137,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" cursor-pointer bg-containerHover text-white px-4 py-2 rounded-md hover:bg-transparent border border-containerHover transition"
+            className=" cursor-pointer bg-header text-white px-4 py-2 rounded-md hover:bg-transparent border border-header transition"
           >
             Submit
           </button>
