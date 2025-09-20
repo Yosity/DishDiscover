@@ -22,11 +22,13 @@ type Recipe = {
 
 export default function Page() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [supaRecipes, setSupaRecipes] = useState<Recipe[]>([]);
   const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadingRandom, setLoadingRandom] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -49,11 +51,33 @@ export default function Page() {
     };
   }, [query]);
 
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchSupabaseRecipes(session.user.id);
+    }
+  }, [session]);
+
   const fetchSession = async () => {
     const currenSession = await supabase.auth.getSession();
-    console.log(currenSession);
+    console.log(currenSession.data.session?.user.id);
     setSession(currenSession.data.session);
   };
+
+  const fetchSupabaseRecipes = async (userId: string) => {
+    const { data, error } = await supabase
+      .from("recipes")
+      .select("*")
+      .eq("created_by", userId)
+      .order("created_at", { ascending: false })
+      .limit(4);
+
+    if (error) {
+      console.error("Error fetching supabase recipes:", error.message);
+      return;
+    }
+    setSupaRecipes(data || []);
+  };
+
   const handleFetchMore = async () => {
     setLoadingRandom(true);
     const moreResults = await fetchRecipes(query, offset + 8, 8);
@@ -173,12 +197,28 @@ export default function Page() {
           />
         </div>
       </section>
-      <section className="flex flex-col  items-center justify-center gap-8 mb-10">
-        <h2 className={`text-6xl ${bubblegum.className} `}>
-          Contribute to the Database
-        </h2>
-
+      <section className=" flex max-lg:flex-col max-lg:items-center justify-start  items-end px-4 py-8   gap-2 max-lg:gap-15 mb-10 bg-orange-500/20">
         <NewRecipeForm isAllowed={!!session} />
+
+        <div className="flex flex-col items-center justify-start gap-4 self-start flex-1">
+          <h3 className={`text-2xl font-semibold ${bubblegum.className}`}>
+            Your Recipes (Recent Four)
+          </h3>
+          {supaRecipes.length === 0 ? (
+            <p className="text-black">You haven’t added any recipes yet.</p>
+          ) : (
+            <div className="  flex flex-wrap justify-center items-start gap-7 max-h-[600px] overflow-auto">
+              {supaRecipes.map((recipe: any) => (
+                <RecipeCard
+                  id={recipe.id}
+                  title={recipe.title}
+                  image={"/fallback.webp"} // if no image column
+                  key={recipe.id}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
       <section
         id="recipes"
@@ -213,7 +253,7 @@ export default function Page() {
         <button
           onClick={handleFetchMore}
           disabled={loadingRandom}
-          className="mt-8 px-6 py-3 bg-header text-white font-bold rounded-lg disabled:bg-gray-400 duration-150 cursor-pointer"
+          className="mt-8 px-6 py-3 bg-header border border-header hover:bg-transparent hover:text-text text-white font-bold rounded-lg disabled:bg-gray-400 duration-150 cursor-pointer"
         >
           {loadingRandom ? "Loading..." : "Show more"}
         </button>

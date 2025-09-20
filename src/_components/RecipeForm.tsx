@@ -1,7 +1,7 @@
 "use client";
 
 import { supabase } from "@/utils/supabaseClient";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
   const [newRecipe, setnewRecipe] = useState({
@@ -18,7 +18,16 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
       window.alert("You are not authorized to add a recipe, Sign in first");
       return;
     }
-    const { error } = await supabase.from("recipes").insert(newRecipe).single();
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    const userId = session?.user?.id;
+
+    const { error } = await supabase
+      .from("recipes")
+      .insert({ ...newRecipe, created_by: userId })
+      .single();
 
     if (error) {
       window.alert("Error inserting the data");
@@ -32,6 +41,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
       });
     }
   };
+
   // const handleDelete = async (id: number) => {
   //   const { error } = await supabase.from("recipes").delete().eq("id", id);
 
@@ -43,7 +53,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
 
   console.log(recipes);
   return (
-    <div className=" flex justify-center items-center p-4">
+    <div className=" flex-1 flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-[600px] bg-text p-8 rounded-xl flex flex-col gap-6"
@@ -127,7 +137,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-containerHover text-white px-4 py-2 rounded-md hover:bg-transparent border border-containerHover transition"
+            className=" cursor-pointer bg-containerHover text-white px-4 py-2 rounded-md hover:bg-transparent border border-containerHover transition"
           >
             Submit
           </button>
