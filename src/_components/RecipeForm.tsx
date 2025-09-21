@@ -86,7 +86,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
         className="w-full max-w-[600px] bg-text p-8 rounded-xl flex flex-col gap-6"
       >
         <h2 className="text-2xl font-semibold text-white mb-4">
-          Add New Recipe
+          Add New Recipes
         </h2>
         <input
           type="text"
