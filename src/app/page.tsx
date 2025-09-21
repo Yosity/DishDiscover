@@ -233,7 +233,7 @@ export default function Page() {
                   <RecipeCard
                     id={`supabase-${recipe.id}`}
                     title={recipe.title}
-                    image={"/fallback.webp"}
+                    image={recipe.image_url || "/"}
                     key={recipe.id}
                   />
                 ))

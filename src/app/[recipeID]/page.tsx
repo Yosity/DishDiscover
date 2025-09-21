@@ -36,7 +36,9 @@ export default async function RecipeDetails({
     <div className="w-full max-w-[1500px] bg-white pb-[5rem]">
       <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-5">
         <img
-          src={information.image}
+          src={
+            id.includes("supabase") ? information.image_url : information.image
+          }
           alt="background Image"
           className="absolute top-0 left-0 w-full h-full object-fill"
           loading="eager"

@@ -12,6 +12,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
   });
 
   const [recipeImg, setRecipeImg] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!isAllowed) {
@@ -74,6 +75,8 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setRecipeImg(e.target.files[0]);
+      const url = URL.createObjectURL(e.target.files[0]);
+      setPreviewUrl(url);
     }
   };
   return (
@@ -206,13 +209,23 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
           }
           required
         />
+        {previewUrl && (
+          <div className="flex justify-center">
+            <img
+              src={previewUrl}
+              alt="Recipe Preview"
+              className="w-30 h-20 object-fill rounded-md mb-2 border border-gray-300"
+            />
+          </div>
+        )}
+
         <input
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          className="bg-white w-fit p-2"
-          required
+          className="bg-white w-fit p-2 cursor-pointer"
         />
+
         <div className="flex justify-center">
           <button
             type="submit"
