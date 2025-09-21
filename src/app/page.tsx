@@ -27,8 +27,8 @@ export default function Page() {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadingRandom, setLoadingRandom] = useState(false);
+  const [loadingSupa, setLoadingSupa] = useState(false);
   const [session, setSession] = useState<any>(null);
-  const [user, setUser] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -57,23 +57,39 @@ export default function Page() {
     }
   }, [session]);
 
+  useEffect(() => {
+    const channel = supabase.channel("recipes-channel");
+    channel
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "recipes" },
+        (payload) => {
+          const newRecipe = payload.new as Recipe;
+          setSupaRecipes((prev) => [...prev, newRecipe]);
+        }
+      )
+      .subscribe((status) => console.log("SUBSCRIPTION ", status));
+  }, []);
+
   const fetchSession = async () => {
     const currenSession = await supabase.auth.getSession();
     setSession(currenSession.data.session);
   };
 
   const fetchSupabaseRecipes = async (userId: string) => {
+    setLoadingSupa(true);
     const { data, error } = await supabase
       .from("recipes")
       .select("*")
       .eq("created_by", userId)
       .order("created_at", { ascending: false })
-      .limit(4);
+      .limit(3);
 
     if (error) {
       console.error("Error fetching supabase recipes:", error.message);
       return;
     }
+    setLoadingSupa(false);
     setSupaRecipes(data || []);
   };
 
@@ -207,14 +223,18 @@ export default function Page() {
             <p className="text-black">You haven’t added any recipes yet.</p>
           ) : (
             <div className="  flex flex-wrap justify-center items-start gap-7 max-h-[600px] overflow-auto">
-              {supaRecipes.map((recipe: any) => (
-                <RecipeCard
-                  id={`supabase-${recipe.id}`}
-                  title={recipe.title}
-                  image={"/fallback.webp"} // if no image column
-                  key={recipe.id}
-                />
-              ))}
+              {loadingSupa ? (
+                <p>Loading Reicpes...</p>
+              ) : (
+                supaRecipes.map((recipe: any) => (
+                  <RecipeCard
+                    id={`supabase-${recipe.id}`}
+                    title={recipe.title}
+                    image={"/fallback.webp"}
+                    key={recipe.id}
+                  />
+                ))
+              )}
             </div>
           )}
         </div>

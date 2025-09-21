@@ -6,6 +6,7 @@ import { supabase } from "@/utils/supabaseClient";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [activeLink, setactiveLink] = useState("home");
   const [session, setSession] = useState<any>(null);
   const fetchSession = async () => {
@@ -14,7 +15,10 @@ export default function Navbar() {
   };
 
   const logout = async () => {
+    setLoading(true);
     await supabase.auth.signOut();
+    setLoading(false);
+    window.alert("You've logged out successfully");
   };
 
   useEffect(() => {
@@ -59,9 +63,11 @@ export default function Navbar() {
       {session ? (
         <button
           onClick={logout}
-          className="hidden lg:block bg-header border-1 border-header px-3 py-2 rounded-md hover:bg-transparent  cursor-pointer duration-150"
+          className={` ${
+            loading ? "bg-gray-500" : "bg-header"
+          } hidden lg:block  border-1 border-header px-3 py-2 rounded-md hover:bg-transparent  cursor-pointer duration-150`}
         >
-          Log out
+          {loading ? "Logging out..." : "Log out"}
         </button>
       ) : (
         <Link
@@ -87,10 +93,15 @@ export default function Navbar() {
           </Link>
           {session ? (
             <button
-              onClick={() => setIsOpen(false)}
-              className=" border-1 border-header px-3 py-2 rounded-md hover:bg-header duration-150"
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className={` ${
+                loading ? "bg-gray-500" : "bg-header"
+              } hidden lg:block  border-1 border-header px-3 py-2 rounded-md hover:bg-transparent  cursor-pointer duration-150`}
             >
-              Log out
+              {loading ? "Logging out..." : "Log out"}
             </button>
           ) : (
             <Link

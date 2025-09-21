@@ -8,9 +8,11 @@ export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
+  const [loading, setLoading] = useState(false);
 
   const handleAuth = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     if (mode === "signUp") {
       const { error: signUpError } = await supabase.auth.signUp({
@@ -18,22 +20,26 @@ export default function AuthForm() {
         password,
       });
       if (signUpError) {
+        setLoading(false);
         window.alert(`Error Signing Up: ${signUpError.message}`);
         return;
       }
       window.alert(
         "Sign Up successful! Check your email to confirm. Or you may be signed up already with this email"
       );
+      setLoading(false);
     } else if (mode === "signIn") {
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (signInError) {
+        setLoading(false);
         window.alert(`Error Signing in: ${signInError.message}`);
         return;
       }
-      window.alert("Signed in successfully!");
+      setLoading(false);
+      // window.alert("Signed in successfully!");
       redirect("/");
     }
   };
@@ -96,9 +102,17 @@ export default function AuthForm() {
         <div>
           <button
             type="submit"
-            className="flex w-full justify-center rounded-md bg-containerHover border border-containerHover px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-containerHover"
+            className={`flex w-full justify-center rounded-md ${
+              loading
+                ? "bg-white text-black hover:bg-white hover:text-black"
+                : "bg-containerHover"
+            }  border border-containerHover px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-containerHover`}
           >
-            {mode === "signIn" ? "Sign in" : "Sign up"}
+            {loading
+              ? "Processing..."
+              : mode === "signIn"
+              ? "Sign in"
+              : "Sign up"}
           </button>
         </div>
       </form>

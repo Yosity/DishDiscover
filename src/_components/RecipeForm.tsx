@@ -51,7 +51,6 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
   //   }
   // };
 
-  console.log(recipes);
   return (
     <div className=" flex-1 flex justify-center items-center">
       <form
