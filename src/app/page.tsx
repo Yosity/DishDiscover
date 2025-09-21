@@ -65,7 +65,10 @@ export default function Page() {
         { event: "INSERT", schema: "public", table: "recipes" },
         (payload) => {
           const newRecipe = payload.new as Recipe;
-          setSupaRecipes((prev) => [...prev, newRecipe]);
+          setSupaRecipes((prev) => {
+            const updated = [payload.new as Recipe, ...prev]; // put new one at top
+            return updated.slice(0, 4); // keep only 4
+          });
         }
       )
       .subscribe((status) => console.log("SUBSCRIPTION ", status));
@@ -83,7 +86,7 @@ export default function Page() {
       .select("*")
       .eq("created_by", userId)
       .order("created_at", { ascending: false })
-      .limit(3);
+      .limit(4);
 
     if (error) {
       console.error("Error fetching supabase recipes:", error.message);

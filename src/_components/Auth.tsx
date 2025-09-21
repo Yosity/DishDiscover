@@ -11,9 +11,8 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false);
 
   const handleAuth = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     setLoading(true);
-
+    e.preventDefault();
     if (mode === "signUp") {
       const { error: signUpError } = await supabase.auth.signUp({
         email,

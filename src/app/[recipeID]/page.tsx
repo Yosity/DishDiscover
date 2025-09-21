@@ -55,15 +55,21 @@ export default async function RecipeDetails({
           <>
             <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
               <span className="font-bold">Calories</span>
-              <span className="block">{information.nutrients.calories}</span>
+              <span className="block">
+                {information.nutrients.calories || "-"} kcal
+              </span>
             </li>
             <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
               <span className="font-bold">Fat</span>
-              <span className="block">{information.nutrients.fats}</span>
+              <span className="block">
+                {information.nutrients.fats || "-"} g
+              </span>
             </li>
             <li className=" border border-containerHover py-2 px-4 rounded-lg text-center select-none text-base">
               <span className="font-bold">Protein</span>
-              <span className="block">{information.nutrients.protein}</span>
+              <span className="block">
+                {information.nutrients.protein || "-"} g
+              </span>
             </li>
           </>
         ) : (
