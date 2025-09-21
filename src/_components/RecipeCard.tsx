@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
+import { supabase } from "@/utils/supabaseClient";
 
 export default function RecipeCard({
   id,
@@ -13,6 +14,7 @@ export default function RecipeCard({
   image: string;
 }) {
   const [liked, setLiked] = useState(false);
+
   return (
     <div className="relative z-40  max-w-[300px] w-full">
       <Link

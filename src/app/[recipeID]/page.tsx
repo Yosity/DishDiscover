@@ -32,6 +32,27 @@ export default async function RecipeDetails({
   function stripHTML(text: string) {
     return text.replace(/<[^>]*>?/gm, "");
   }
+
+  async function getUserId() {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Error fetching user:", error.message);
+      return null;
+    }
+
+    if (!user) {
+      console.log("No user logged in");
+      return null;
+    }
+
+    return user.id;
+  }
+
+  let userId = getUserId();
   return (
     <div className="w-full max-w-[1500px] bg-white pb-[5rem]">
       <section className="w-full h-screen max-h-[1000px] relative overflow-hidden mb-5">

@@ -13,10 +13,13 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
 
   const [recipeImg, setRecipeImg] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [submitLoad, setSubmitLoad] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setSubmitLoad(true);
     if (!isAllowed) {
       window.alert("You are not authorized to add a recipe, Sign in first");
+      setSubmitLoad(false);
       return;
     }
     const {
@@ -35,6 +38,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
 
     if (error) {
       window.alert("Error inserting the data");
+      setSubmitLoad(false);
       return;
     } else {
       setnewRecipe({
@@ -44,6 +48,7 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
         summary: "",
       });
     }
+    setSubmitLoad(false);
   };
 
   // const handleDelete = async (id: number) => {
@@ -229,9 +234,13 @@ export default function NewRecipeForm({ isAllowed }: { isAllowed: boolean }) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" cursor-pointer bg-header text-white px-4 py-2 rounded-md hover:bg-transparent border border-header transition"
+            className={`  ${
+              submitLoad
+                ? "bg-white text-header hover:bg-white"
+                : "bg-header text-white"
+            } cursor-pointer bg-header text-white px-4 py-2 rounded-md hover:bg-transparent border border-header transition`}
           >
-            Submit
+            {submitLoad ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>
