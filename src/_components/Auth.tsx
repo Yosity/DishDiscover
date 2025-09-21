@@ -75,14 +75,6 @@ export default function AuthForm() {
             >
               Password
             </label>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-semibold text-white hover:text-containerHover"
-              >
-                Forgot password?
-              </a>
-            </div>
           </div>
           <div className="mt-2">
             <input
@@ -104,8 +96,8 @@ export default function AuthForm() {
             className={`flex w-full justify-center rounded-md ${
               loading
                 ? "bg-white text-black hover:bg-white hover:text-black"
-                : "bg-containerHover"
-            }  border border-containerHover px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-containerHover`}
+                : "bg-containerHover text-white"
+            }  border border-containerHover px-3 py-1.5 text-sm/6 font-semibold  cursor-pointer hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-containerHover`}
           >
             {loading
               ? "Processing..."

@@ -144,7 +144,7 @@ export default function Page() {
             currently using the free version of the API, which limits us to 50
             requests per day....{" "}
             <span className="uppercase text-xs font-[600]">
-              So dont explore too much eh ?
+              So dont explore too much :|
             </span>
           </p>
           <p className="mt-5 mb-10">
@@ -218,12 +218,19 @@ export default function Page() {
       <section className=" flex max-lg:flex-col max-lg:items-center justify-start  items-end px-4 py-8   gap-2 max-lg:gap-15 mb-10 bg-orange-500/20">
         <NewRecipeForm isAllowed={!!session} />
 
-        <div className="flex flex-col items-center justify-start gap-4 self-start flex-1">
+        <div className="flex flex-col items-center justify-center gap-4 self-start w-full flex-1">
           <h3 className={`text-2xl font-semibold ${bubblegum.className}`}>
             Your Recipes (Recent Four)
           </h3>
           {supaRecipes.length === 0 ? (
-            <p className="text-black">You haven’t added any recipes yet.</p>
+            <p className="text-black text-center">
+              You haven’t added any recipes yet.{" "}
+              <span className="block text-xs font-semibold">
+                {" "}
+                On your 1st submit, refresh the page once to activate supabase
+                real-time change subscription, then try again.
+              </span>
+            </p>
           ) : (
             <div className="  flex flex-wrap justify-center items-start gap-7 max-h-[600px] overflow-auto">
               {loadingSupa ? (
