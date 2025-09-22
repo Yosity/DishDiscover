@@ -6,13 +6,7 @@ export default function Favorites() {
         Your Favorite Recipes
       </h2>
       <section className="flex flex-wrap justify-center m-auto gap-[1rem] max-w-[1000px] ">
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
-        <div className="w-[200px] h-[200px] bg-red-400"></div>
+        <div>Feature will be available soon</div>
       </section>
     </div>
   );
